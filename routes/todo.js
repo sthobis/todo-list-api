@@ -23,7 +23,7 @@ router.route('/todos')
 	.get(function(req, res) {
 		pool.getConnection(function(err, connection) {
 
-			var query = 'SELECT * FROM todos';
+			var query = 'SELECT * FROM todos WHERE status = "open"';
 
 			connection.query( query, function(err, rows) {
 				connection.release();
@@ -40,7 +40,7 @@ router.route('/todos')
 	.post(function(req, res) {
 		pool.getConnection(function(err, connection) {
 
-			var query = 'INSERT INTO todos (name, project_id, project_name, assignee) VALUES ("'+req.body.name+'", "'+req.body.project_id+'", "'+req.body.project_name+'", "'+req.body.assignee+'")';
+			var query = 'INSERT INTO todos (name, project_id, project_name, assignee, status) VALUES ("'+req.body.name+'", "'+req.body.project_id+'", "'+req.body.project_name+'", "'+req.body.assignee+'", "open")';
 
 			connection.query( query, function(err, rows) {
 				connection.release();
