@@ -23,9 +23,7 @@ router.route('/todos')
 	.get(function(req, res) {
 		pool.getConnection(function(err, connection) {
 
-			var query = 'SELECT * FROM ??';
-			var table = ['todos'];
-			query = mysql.format(query,table);
+			var query = 'SELECT * FROM todos';
 
 			connection.query( query, function(err, rows) {
 				connection.release();
@@ -42,9 +40,7 @@ router.route('/todos')
 	.post(function(req, res) {
 		pool.getConnection(function(err, connection) {
 
-			var query = 'INSERT INTO ?? (name, project_id, project_name, assignee) VALUES (?, ?, ?, ?)';
-			var table = ['todos', req.name, req.project_id, req.project_name, req.assignee];
-			query = mysql.format(query,table);
+			var query = 'INSERT INTO todos (name, project_id, project_name, assignee) VALUES ("'+req.body.name+'", "'+req.body.project_id+'", "'+req.body.project_name+'", "'+req.body.assignee+'")';
 
 			connection.query( query, function(err, rows) {
 				connection.release();
